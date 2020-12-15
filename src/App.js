@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import logo from "./logo.svg";
+import { Provider } from "react-redux";
+import "./App.css";
+import { ConnectedRouter } from "connected-react-router";
+
+import store, { history } from "./store";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import About from "./Screens/About/main";
+import Dashboard from "./Screens/Dashboard/main";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Provider store={store}>
+        <ConnectedRouter history={history}>
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/about" component={About} />
+            </Switch>
+          </Router>
+        </ConnectedRouter>
+      </Provider>
     </div>
   );
 }
